@@ -9,10 +9,11 @@ if(!file.exists("household_power_consumption.txt")){
 data <- read.table("household_power_consumption.txt", header = TRUE, sep = ";", colClasses = c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"), na = "?")
 DT <- paste(data$Date, data$Time)
 data$DateandTime <- strptime(DT, "%d/%m/%Y %H:%M:%S")
+rm(DT)
 data <- data[data$DateandTime > "2007-02-01" & data$DateandTime < "2007-02-03" & is.na(data$DateandTime) == FALSE, c(-1, -2)]
 
 ## Create histogram
-hist(data$Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
+with(data, hist(Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)"))
 
 ## Copy my plot to a .png file
 dev.copy(png, file = "plot1.png")
